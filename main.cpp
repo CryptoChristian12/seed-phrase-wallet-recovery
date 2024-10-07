@@ -78,11 +78,10 @@ brute:
         SetConsoleTitleA(title.c_str());
         ++seed_count;
 
-        if ((seed_count % 1000000000000000000000000000) == 0) {
-            system("cls");
-        }
-    }
-
+    if ((seed_count % 18446744073709551615ULL) == 0) {
+    system("cls");
+}
+        
     // Restore original output buffer
     std::cout.rdbuf(coutbuf);
 
