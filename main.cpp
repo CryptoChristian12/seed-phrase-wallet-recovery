@@ -78,7 +78,7 @@ brute:
         SetConsoleTitleA(title.c_str());
         ++seed_count;
 
-        if ((seed_count % 10000000) == 0) {
+        if ((seed_count % 1000000000000000000000000000) == 0) {
             system("cls");
         }
     }
