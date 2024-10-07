@@ -1,7 +1,21 @@
 #include <iostream>
 #include "generate.h"
 #include "checker.h"
+#include <iostream>
+#include <fstream>
 
+int main() {
+    // Redirect output to a file
+    std::ofstream file("found_wallets.txt");
+    std::streambuf* coutbuf = std::cout.rdbuf(file.rdbuf());
+
+    // Your program code here...
+
+    // Restore original output buffer
+    std::cout.rdbuf(coutbuf);
+
+    return 0;
+}
 
 int main(int argc, char** argv)
 {
