@@ -4,3 +4,5 @@
 4. Better menu
 5. FASTER
 6. Discord webhook
+7. Fix auto closing ✅ (Possibly, hopefully)
+8. Release
