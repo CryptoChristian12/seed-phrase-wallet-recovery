@@ -1,0 +1,6 @@
+1. Add a variable 'time' for better speed calcutations
+2. Add multi threads
+3. Make silent run
+4. Better menu
+5. FASTER
+6. Discord webhook
