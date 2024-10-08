@@ -6,3 +6,4 @@
 6. Discord webhook
 7. Fix auto closing ✅ (Possibly, hopefully)
 8. Release
+9. Remote access and options (.exe to install gen, menu with devices, battery & GPU options, discord webhooks etc.) < BIGGEST TO-DO LAST (OR SEPERATE UPDATE)
