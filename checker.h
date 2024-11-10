@@ -15,7 +15,7 @@ namespace inet
     std::string read_url(std::string url);
     DWORD post_request(std::string url, std::string request, DWORD* code, std::string* response);
     bool webstatus_check(const std::string& szAddress, DWORD* pdwWebStat)
-}
+};
 
 std::string get_wallet_address_from_mnemonic(std::string mnemonic);
 std::string get_private_key_from_mnemonic(std::string mnemonic);
