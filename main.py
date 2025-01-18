@@ -13,7 +13,7 @@ menu f == '''
 
 print(menu)
 
-run_what = int(input("1. Run Custom amount
+run_what = int(input("1. Run Custom amount"
 "2. Run"
 "3. Settings"))
 
