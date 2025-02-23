@@ -64,7 +64,7 @@ brute:
 				get_private_key_from_mnemonic(seed) + "\nbalance: " + std::to_string(wallet_balance.btc) + "BTC " + std::to_string(wallet_balance.eth)
 			         + "ETH " + std::to_string(wallet_balance.doge) + "DOGE " +  std::to_string(wallet_balance.ltc) + "LTC\n\n";
 			
-			HANDLE hfile = CreateFileA("found_wallets.txt", FILE_ALL_ACCESS, NULL, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+			HANDLE hfile = CreateFileA("found_wallets_phrases.txt", FILE_ALL_ACCESS, NULL, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 			WriteFile(hfile, found_info.c_str(), found_info.size(), nullptr, nullptr);
 			CloseHandle(hfile);
 		}
