@@ -9,7 +9,7 @@
 int main(int argc, char** argv)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11";
+    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11 - Updated by CryptoChristian";
     SetConsoleTitleA(title.c_str());
 
     DWORD webstatus = 0;
@@ -24,7 +24,8 @@ int main(int argc, char** argv)
     float total_balance = 0;
 
     while (true) {
-        std::cout << "\nSelect an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n";
+        std::cout << "" $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$\         $$$$$$\  $$$$$$$$\ $$\   $$\ \n$$  __$$\ $$  _____|$$  _____|$$  __$$\       $$  __$$\ $$  _____|$$$\  $$ | \n$$ /  \__|$$ |      $$ |      $$ |  $$ |      $$ /  \__|$$ |      $$$$\ $$ | \n\$$$$$$\  $$$$$\    $$$$$\    $$ |  $$ |      $$ |$$$$\ $$$$$\    $$ $$\$$ | \n \____$$\ $$  __|   $$  __|   $$ |  $$ |      $$ |\_$$ |$$  __|   $$ \$$$$ | \n$$\   $$ |$$ |      $$ |      $$ |  $$ |      $$ |  $$ |$$ |      $$ |\$$$ | \n\$$$$$$  |$$$$$$$$\ $$$$$$$$\ $$$$$$$  |      \$$$$$$  |$$$$$$$$\ $$ | \$$ | \n \______/ \________|\________|\_______/        \______/ \________|\__|  \__| \n"
+By Cosmo11, Updated by CryptoChristian\nSelect an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n";
 
         if (GetAsyncKeyState('1') & 1) {
             std::cout << "\n\n";
