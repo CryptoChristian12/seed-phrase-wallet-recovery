@@ -6,6 +6,13 @@
 6. Fix auto closing ✅ (Possibly, hopefully)
 7. Speed calculation (amount/time)
 8. Release
+
+
+
+
+
+
+
 9. Proxies
 10. Keybind/shortcut???
 11. Change GPU usage
