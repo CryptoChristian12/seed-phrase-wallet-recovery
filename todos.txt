@@ -2,10 +2,9 @@
 2. Add multi threads
 3. Make silent run
 4. Better menu✅
-5. FASTER
-6. Discord webhook
-7. Fix auto closing ✅ (Possibly, hopefully)
-8. Release
-9. Remote access and options (.exe to install gen, menu with devices, battery & GPU options, discord webhooks etc.) < BIGGEST TO-DO LAST (SEPERATE UPDATE, MALWARE)
-10. Speed calculation (time/amount)
-11. Proxies
+5. Discord webhook
+6. Fix auto closing ✅ (Possibly, hopefully)
+7. Speed calculation (amount/time)
+8. Proxies
+9. Release
+10. Remote access and options (list with devices, .exe to rat, battery & GPU options, discord webhooks etc.) < BIGGEST TO-DO LAST (SEPERATE UPDATE, MALWARE, MAYBE)
