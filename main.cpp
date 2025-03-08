@@ -1,47 +1,49 @@
 #include <iostream>
-#include <windows.h>
-#include <fstream>
+#include <Windows.h>
 #include <ctime>
-
+#include <chrono>  // For time tracking
 #include "generate.h"
 #include "checker.h"
 
 int main(int argc, char** argv)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11 - Updated by CryptoChristian";
+    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11";
     SetConsoleTitleA(title.c_str());
 
     DWORD webstatus = 0;
-    if (!inet::webstatus_check("https://www.blockchain.com/explorer", &webstatus) || webstatus != 200) {
-        std::cout << "Failed to access the blockchain. Check your internet connection\n";
+    if (!inet::webstatus_check("https://www.blockchain.com/explorer", &webstatus) || webstatus != 200)
+    {
+        std::cout << ("Failed to access the blockchain. Check your internet connection\n");
         Sleep(6000);
-        return 0;
+        exit(0);
     }
 
     srand(static_cast<unsigned int>(time(0)));
     DWORD64 seed_count = 0;
     float total_balance = 0;
 
+menu:
+    std::cout << ("select an action:\n'1' - generate 1 seed phrase\n'2' - search for seed phrases with coins(BTC, ETH, LTC, DOGE)\n");
     while (true) {
-        std::cout << "" $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$\         $$$$$$\  $$$$$$$$\ $$\   $$\ \n$$  __$$\ $$  _____|$$  _____|$$  __$$\       $$  __$$\ $$  _____|$$$\  $$ | \n$$ /  \__|$$ |      $$ |      $$ |  $$ |      $$ /  \__|$$ |      $$$$\ $$ | \n\$$$$$$\  $$$$$\    $$$$$\    $$ |  $$ |      $$ |$$$$\ $$$$$\    $$ $$\$$ | \n \____$$\ $$  __|   $$  __|   $$ |  $$ |      $$ |\_$$ |$$  __|   $$ \$$$$ | \n$$\   $$ |$$ |      $$ |      $$ |  $$ |      $$ |  $$ |$$ |      $$ |\$$$ | \n\$$$$$$  |$$$$$$$$\ $$$$$$$$\ $$$$$$$  |      \$$$$$$  |$$$$$$$$\ $$ | \$$ | \n \______/ \________|\________|\_______/        \______/ \________|\__|  \__| \n"
-By Cosmo11, Updated by CryptoChristian\nSelect an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n";
-
         if (GetAsyncKeyState('1') & 1) {
             std::cout << "\n\n";
             std::string seed = generate_seed_phrase(12);
-            std::cout << "Seed: " << seed << "\n\n";
+            std::cout << "seed: " << seed << "\n\n";
+            goto menu;
         }
-        else if (GetAsyncKeyState('2') & 1) {
-            break; // Exit loop to start brute-force mode
+        else if (GetAsyncKeyState(('2')) & 1) {
+            // Start the timer once '2' is selected
+            auto start_time = std::chrono::steady_clock::now();
+            goto brute;
         }
-        Sleep(100); // Prevent high CPU usage
+        Sleep(1);
     }
 
-    // Brute-force mode
+brute:
     while (true) {
         std::string seed = generate_seed_phrase(12);
-        std::cout << "Seed: " << seed;
+        std::cout << "seed: " << seed;
 
         balance wallet_balance;
         if (check_wallet(seed, &wallet_balance) != 0)
@@ -51,7 +53,8 @@ By Cosmo11, Updated by CryptoChristian\nSelect an action:\n'1' - Generate 1 seed
             SetConsoleTextAttribute(hConsole, 4);
             std::cout << " (empty)";
             SetConsoleTextAttribute(hConsole, 7);
-        } else {
+        }
+        else {
             SetConsoleTextAttribute(hConsole, 2);
             std::cout << " (with balance)";
             SetConsoleTextAttribute(hConsole, 7);
@@ -61,30 +64,33 @@ By Cosmo11, Updated by CryptoChristian\nSelect an action:\n'1' - Generate 1 seed
             total_balance += wallet_balance.doge * get_doge_price();
             total_balance += wallet_balance.ltc * get_ltc_price();
 
-            std::string found_info = "Address: " + get_wallet_address_from_mnemonic(seed) +
-                "\nMnemonic: " + seed + "\nPrivate Key: " + get_private_key_from_mnemonic(seed) +
-                "\nBalance: " + std::to_string(wallet_balance.btc) + " BTC, " +
-                std::to_string(wallet_balance.eth) + " ETH, " +
-                std::to_string(wallet_balance.doge) + " DOGE, " +
-                std::to_string(wallet_balance.ltc) + " LTC\n\n";
-
-            // Use fstream instead of CreateFileA
-            std::ofstream outFile("found_wallets_phrases.txt", std::ios::app);
-            if (outFile.is_open()) {
-                outFile << found_info;
-                outFile.close();
-            }
+            std::string found_info = "address: " + get_wallet_address_from_mnemonic(seed) + "\nmnemonic: " + seed + "\nprivate key: " + 
+                get_private_key_from_mnemonic(seed) + "\nbalance: " + std::to_string(wallet_balance.btc) + "BTC " + std::to_string(wallet_balance.eth)
+                + "ETH " + std::to_string(wallet_balance.doge) + "DOGE " + std::to_string(wallet_balance.ltc) + "LTC\n\n";
+            
+            HANDLE hfile = CreateFileA("found_wallets_phrases.txt", FILE_ALL_ACCESS, NULL, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+            WriteFile(hfile, found_info.c_str(), found_info.size(), nullptr, nullptr);
+            CloseHandle(hfile);
         }
 
         std::cout << std::endl;
-        std::string new_title = title + " | Checked seeds: " + std::to_string(seed_count) + " | Total balance: $" + std::to_string(total_balance);
+        
+        // Get the elapsed time since '2' was selected
+        auto current_time = std::chrono::steady_clock::now();
+        std::chrono::duration<float> elapsed_time = current_time - start_time;
+
+        // Update title with total balance and elapsed time
+        std::string new_title = title + (" | Checked seeds: ") + std::to_string(seed_count) + (" | Total balance: $") + std::to_string(total_balance)
+                                + (" | Time elapsed: ") + std::to_string(elapsed_time.count()) + "s";  // Time in seconds
         SetConsoleTitleA(new_title.c_str());
+
         ++seed_count;
 
-        if ((seed_count % 10000000000) == 0) {
+        if ((seed_count % 10000000) == 0) {
             system("cls");
         }
     }
 
     return 0;
 }
+
