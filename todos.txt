@@ -2,9 +2,16 @@
 2. Add multi threads
 3. Make silent run
 4. Better menu✅
-5. Discord webhook
+5. Discord webhook (choice .txt, webhook or both)
 6. Fix auto closing ✅ (Possibly, hopefully)
 7. Speed calculation (amount/time)
-8. Proxies
-9. Release
-10. Remote access and options (list with devices, .exe to rat, battery & GPU options, discord webhooks etc.) < BIGGEST TO-DO LAST (SEPERATE UPDATE, MALWARE, MAYBE)
+8. Release
+9. Proxies
+10. Keybind/shortcut???
+11. Change GPU usage
+12. Run during sleep mode
+13. Login with saved settings
+14. Release
+15. Remote access and options (list with devices, .exe to rat, battery & GPU options, discord webhooks etc.) < BIGGEST TO-DO LAST (SEPERATE UPDATE, MALWARE, MAYBE)
+ 
+ 
