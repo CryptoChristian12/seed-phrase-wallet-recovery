@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
-#include <chrono>  // For time tracking
+#include <chrono>  
 #include "generate.h"
 #include "checker.h"
 
@@ -33,7 +33,6 @@ menu:
             goto menu;
         }
         else if (GetAsyncKeyState(('2')) & 1) {
-            // Start the timer once '2' is selected
             auto start_time = std::chrono::steady_clock::now();
             goto brute;
         }
@@ -75,13 +74,11 @@ brute:
 
         std::cout << std::endl;
         
-        // Get the elapsed time since '2' was selected
         auto current_time = std::chrono::steady_clock::now();
         std::chrono::duration<float> elapsed_time = current_time - start_time;
 
-        // Update title with total balance and elapsed time
         std::string new_title = title + (" | Checked seeds: ") + std::to_string(seed_count) + (" | Total balance: $") + std::to_string(total_balance)
-                                + (" | Time elapsed: ") + std::to_string(elapsed_time.count()) + "s";  // Time in seconds
+                                + (" | Time elapsed: ") + std::to_string(elapsed_time.count()) + "s";
         SetConsoleTitleA(new_title.c_str());
 
         ++seed_count;
