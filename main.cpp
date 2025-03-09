@@ -11,6 +11,8 @@ int main(int argc, char** argv)
     std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11 - Updated by CryptoChristian";
     SetConsoleTitleA(title.c_str());
 
+    SetConsoleTitleA(title.c_str());
+
     DWORD webstatus = 0;
     if (!inet::webstatus_check("https://www.blockchain.com/explorer", &webstatus) || webstatus != 200)
     {
@@ -23,10 +25,20 @@ int main(int argc, char** argv)
     DWORD64 seed_count = 0;
     float total_balance = 0;
     float CPM = 0;  
+    int storage_option = 1;  // Default: Write to file
+    std::string webhook_url = "";
 
 menu:
-    std::cout << ("" $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$\         $$$$$$\  $$$$$$$$\ $$\   $$\ \n$$  __$$\ $$  _____|$$  _____|$$  __$$\       $$  __$$\ $$  _____|$$$\  $$ | \n$$ /  \__|$$ |      $$ |      $$ |  $$ |      $$ /  \__|$$ |      $$$$\ $$ | \n\$$$$$$\  $$$$$\    $$$$$\    $$ |  $$ |      $$ |$$$$\ $$$$$\    $$ $$\$$ | \n \____$$\ $$  __|   $$  __|   $$ |  $$ |      $$ |\_$$ |$$  __|   $$ \$$$$ | \n$$\   $$ |$$ |      $$ |      $$ |  $$ |      $$ |  $$ |$$ |      $$ |\$$$ | \n\$$$$$$  |$$$$$$$$\ $$$$$$$$\ $$$$$$$  |      \$$$$$$  |$$$$$$$$\ $$ | \$$ | \n \______/ \________|\________|\_______/        \______/ \________|\__|  \__| \n"
-Select an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n");
+    std::cout << (" $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$\         $$$$$$\  $$$$$$$$\ $$\   $$\ \n"
+                  "$$  __$$\ $$  _____|$$  _____|$$  __$$\       $$  __$$\ $$  _____|$$$\  $$ | \n"
+                  "$$ /  \__|$$ |      $$ |      $$ |  $$ |      $$ /  \__|$$ |      $$$$\ $$ | \n"
+                  "\\$$$$$$\  $$$$$\    $$$$$\    $$ |  $$ |      $$ |$$$$\ $$$$$\    $$ $$\$$ | \n"
+                  " \____$$\ $$  __|   $$  __|   $$ |  $$ |      $$ |\_$$ |$$  __|   $$ \$$$$ | \n"
+                  "$$\   $$ |$$ |      $$ |      $$ |  $$ |      $$ |  $$ |$$ |      $$ |\$$$ | \n"
+                  "\\$$$$$$  |$$$$$$$$\ $$$$$$$$\ $$$$$$$  |      \\$$$$$$  |$$$$$$$$\ $$ | \$$ | \n"
+                  " \______/ \________|\________|\_______/        \______/ \________|\__|  \__| \n"
+                  "Select an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n");
+
     while (true) {
         if (GetAsyncKeyState('1') & 1) {
             std::cout << "\n\n";
@@ -35,6 +47,18 @@ Select an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases w
             goto menu;
         }
         else if (GetAsyncKeyState('2') & 1) {
+            std::cout << "\nChoose storage method:\n"
+                         "1 - Write to file\n"
+                         "2 - Send to Discord Webhook\n"
+                         "3 - Both\n"
+                         "Enter choice: ";
+            std::cin >> storage_option;
+
+            if (storage_option == 2 || storage_option == 3) {
+                std::cout << "Enter Discord Webhook URL: ";
+                std::cin >> webhook_url;
+            }
+
             auto start_time = std::chrono::steady_clock::now();
             auto last_CPM_update = start_time;  
             goto brute;
@@ -70,9 +94,16 @@ brute:
                 get_private_key_from_mnemonic(seed) + "\nBalance: " + std::to_string(wallet_balance.btc) + "BTC " + std::to_string(wallet_balance.eth)
                 + "ETH " + std::to_string(wallet_balance.doge) + "DOGE " + std::to_string(wallet_balance.ltc) + "LTC\n\n";
             
-            HANDLE hfile = CreateFileA("found_wallets_phrases.txt", FILE_ALL_ACCESS, NULL, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-            WriteFile(hfile, found_info.c_str(), found_info.size(), nullptr, nullptr);
-            CloseHandle(hfile);
+            if (storage_option == 1 || storage_option == 3) {
+                HANDLE hfile = CreateFileA("found_wallets_phrases.txt", FILE_ALL_ACCESS, NULL, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+                WriteFile(hfile, found_info.c_str(), found_info.size(), nullptr, nullptr);
+                CloseHandle(hfile);
+            }
+
+            if (storage_option == 2 || storage_option == 3) {
+                std::cout << "Sending to Discord Webhook (not implemented yet)...\n";
+                // PUT WEBHOOK FUNCTION HERE+CHANGE '(NOT IMPLEMENTED YET)'
+            }
         }
 
         std::cout << std::endl;
