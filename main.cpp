@@ -1,14 +1,14 @@
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
-#include <chrono>  // For time tracking
+#include <chrono>  
 #include "generate.h"
 #include "checker.h"
 
 int main(int argc, char** argv)
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11";
+    std::string title = "[Seed phrase Generate & Check - BTC; ETH; LTC; DOGE] - By Cosmo11 - Updated by CryptoChristian";
     SetConsoleTitleA(title.c_str());
 
     DWORD webstatus = 0;
@@ -22,10 +22,11 @@ int main(int argc, char** argv)
     srand(static_cast<unsigned int>(time(0)));
     DWORD64 seed_count = 0;
     float total_balance = 0;
-    float CPM = 0;  // Checks Per Minute
+    float CPM = 0;  
 
 menu:
-    std::cout << ("Select an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n");
+    std::cout << ("" $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$\         $$$$$$\  $$$$$$$$\ $$\   $$\ \n$$  __$$\ $$  _____|$$  _____|$$  __$$\       $$  __$$\ $$  _____|$$$\  $$ | \n$$ /  \__|$$ |      $$ |      $$ |  $$ |      $$ /  \__|$$ |      $$$$\ $$ | \n\$$$$$$\  $$$$$\    $$$$$\    $$ |  $$ |      $$ |$$$$\ $$$$$\    $$ $$\$$ | \n \____$$\ $$  __|   $$  __|   $$ |  $$ |      $$ |\_$$ |$$  __|   $$ \$$$$ | \n$$\   $$ |$$ |      $$ |      $$ |  $$ |      $$ |  $$ |$$ |      $$ |\$$$ | \n\$$$$$$  |$$$$$$$$\ $$$$$$$$\ $$$$$$$  |      \$$$$$$  |$$$$$$$$\ $$ | \$$ | \n \______/ \________|\________|\_______/        \______/ \________|\__|  \__| \n"
+Select an action:\n'1' - Generate 1 seed phrase\n'2' - Search for seed phrases with coins (BTC, ETH, LTC, DOGE)\n");
     while (true) {
         if (GetAsyncKeyState('1') & 1) {
             std::cout << "\n\n";
@@ -34,9 +35,8 @@ menu:
             goto menu;
         }
         else if (GetAsyncKeyState('2') & 1) {
-            // Start the timer once '2' is selected
             auto start_time = std::chrono::steady_clock::now();
-            auto last_CPM_update = start_time;  // Last time CPM was updated
+            auto last_CPM_update = start_time;  
             goto brute;
         }
         Sleep(1);
@@ -77,28 +77,24 @@ brute:
 
         std::cout << std::endl;
         
-        // Get the elapsed time
         auto current_time = std::chrono::steady_clock::now();
         std::chrono::duration<float> elapsed_time = current_time - start_time;
 
-        // Check if 120 seconds (2 minutes) have passed since the test started
         if (elapsed_time.count() >= 120) {
             float elapsed_time_minutes = elapsed_time.count() / 60.0f;
-            CPM = seed_count / elapsed_time_minutes;  // Calculate checks per minute
+            CPM = seed_count / elapsed_time_minutes; 
         }
 
-        // Every 20 minutes, update CPM again
-        if (std::chrono::duration<float>(current_time - last_CPM_update).count() >= 1200) {  // 1200 seconds = 20 minutes
+        if (std::chrono::duration<float>(current_time - last_CPM_update).count() >= 1200) {  
             float elapsed_time_minutes = elapsed_time.count() / 60.0f;
             CPM = seed_count / elapsed_time_minutes;
-            last_CPM_update = current_time;  // Reset last CPM update time
+            last_CPM_update = current_time;  
         }
 
-        // Update title with Total Balance, Elapsed Time, and CPM
         std::string new_title = title + " | Checked Seeds: " + std::to_string(seed_count) +
                                 " | Total Balance: $" + std::to_string(total_balance) +
                                 " | Time Elapsed: " + std::to_string(elapsed_time.count()) + "s" +
-                                " | CPM: " + std::to_string(CPM);
+                                " | SeedsPerMin: " + std::to_string(CPM);
         SetConsoleTitleA(new_title.c_str());
 
         ++seed_count;
